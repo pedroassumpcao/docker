@@ -1,4 +1,4 @@
-FROM pedroassumpcao/elixir:1.1.1
+FROM pedroassumpcao/elixir:1.2.0
 
 MAINTAINER Pedro Assumpcao <pedro.assumpcao@gmail.com>
 
