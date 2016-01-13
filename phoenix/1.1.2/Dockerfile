@@ -2,7 +2,9 @@ FROM pedroassumpcao/elixir:1.2.0
 
 MAINTAINER Pedro Assumpcao <pedro.assumpcao@gmail.com>
 
-ENV PHOENIX_VERSION 1.1.2
+ENV NODE_VERSION 5.4.0
+ENV NPM_VERSION 2
+ENV NPM_CONFIG_LOGLEVEL info
 
 RUN set -ex && \
     for key in \
@@ -16,19 +18,20 @@ RUN set -ex && \
       gpg --keyserver ha.pool.sks-keyservers.net --recv-keys "$key"; \
     done
 
-ENV NPM_CONFIG_LOGLEVEL info
-ENV NODE_VERSION 5.1.0
-
 RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.gz" && \
     curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc" && \
     gpg --verify SHASUMS256.txt.asc && \
     grep " node-v$NODE_VERSION-linux-x64.tar.gz\$" SHASUMS256.txt.asc | sha256sum -c - && \
     tar -xzf "node-v$NODE_VERSION-linux-x64.tar.gz" -C /usr/local --strip-components=1 && \
-    rm "node-v$NODE_VERSION-linux-x64.tar.gz" SHASUMS256.txt.asc
+    rm "node-v$NODE_VERSION-linux-x64.tar.gz" SHASUMS256.txt.asc && \
+    npm install -g npm@$NPM_VERSION --prefix=/usr/local && \
+    ln -s -f /usr/local/bin/npm /usr/bin/npm && \
+    npm cache clear
 
-RUN mix archive.install https://github.com/phoenixframework/phoenix/releases/download/v$PHOENIX_VERSION/phoenix_new-$PHOENIX_VERSION.ez --force
-
+ENV PHOENIX_VERSION 1.1.2
 ENV PORT 4000
 ENV MIX_ENV prod
+
+RUN mix archive.install https://github.com/phoenixframework/phoenix/releases/download/v$PHOENIX_VERSION/phoenix_new-$PHOENIX_VERSION.ez --force
 
 CMD ["iex"]
