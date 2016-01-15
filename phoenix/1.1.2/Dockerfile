@@ -28,6 +28,8 @@ RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-
     ln -s -f /usr/local/bin/npm /usr/bin/npm && \
     npm cache clear
 
+RUN apt-get update && apt-get install -y postgresql-client-9.4
+
 ENV PHOENIX_VERSION 1.1.2
 ENV PORT 4000
 ENV MIX_ENV prod
