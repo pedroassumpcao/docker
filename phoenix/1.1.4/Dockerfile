@@ -34,6 +34,6 @@ ENV PHOENIX_VERSION 1.1.4
 ENV PORT 4000
 ENV MIX_ENV prod
 
-RUN mix archive.install https://github.com/phoenixframework/phoenix/releases/download/v$PHOENIX_VERSION/phoenix_new-$PHOENIX_VERSION.ez --force
+RUN mix archive.install https://github.com/phoenixframework/archives/raw/master/phoenix_new-$PHOENIX_VERSION.ez --force
 
 CMD ["iex"]
