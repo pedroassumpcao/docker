@@ -30,7 +30,7 @@ RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-
 
 RUN apt-get update && apt-get install -y postgresql-client-9.4
 
-ENV PHOENIX_VERSION 1.1.6
+ENV PHOENIX_VERSION 1.1.4
 ENV PORT 4000
 ENV MIX_ENV prod
 
